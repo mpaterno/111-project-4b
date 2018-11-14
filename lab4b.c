@@ -118,86 +118,87 @@ void getOptions(int argc, char **argv)
       exit(1);
     }
   }
+}
 
-  double getTemp(double rTemp)
+double getTemp(double rTemp)
+{
+  double celsius = 1.0 / (log(1023 / (rTemp)-1) / 4275 + 1 / 298.15) - 273.15;
+  if (scale == 'F')
+    return celsius * 9.0 / 5.0 + 32;
+  return celsius;
+}
+
+void initializeHardware()
+{
+  tempSensor = mraa_aio_init(1);
+  button = mraa_gpio_init(60);
+  mraa_gpio_dir(button, MRAA_GPIO_IN);
+}
+
+void writeReport(double temp)
+{
+  // Get time for Report
+  char sTime[16];
+  getTime(sTime, 16);
+  printf("%s %.1f\n", sTime, temp);
+  if (logFlag)
   {
-    double celsius = 1.0 / (log(1023 / (rTemp)-1) / 4275 + 1 / 298.15) - 273.15;
-    if (scale == 'F')
-      return celsius * 9.0 / 5.0 + 32;
-    return celsius;
+    fprintf(logFile, "%s %.1f\n", sTime, temp);
   }
+}
 
-  void initializeHardware()
+void getTime(char *mTime, int size)
+{
+  time_t rawtime;
+  struct tm *localTime;
+  time(&rawtime);
+  localTime = localtime(&rawtime);
+  strftime(mTime, size, "%H:%M:%S", localTime);
+}
+
+void parseCommands(const char *commands)
+{
+  if (logFlag)
   {
-    tempSensor = mraa_aio_init(1);
-    button = mraa_gpio_init(60);
-    mraa_gpio_dir(button, MRAA_GPIO_IN);
+    fprintf(logFile, "%s\n", commands);
   }
-
-  void writeReport(double temp)
+  if (strncmp(commands, "STOP", strlen("STOP")) == 0)
+    isReporting = false;
+  else if (strncmp(commands, "START", strlen("START")) == 0)
+    isReporting = true;
+  else if (strncmp(commands, "PERIOD=", strlen("PERIOD=")) == 0)
+    period = strtol(commands + 7, NULL, 10);
+  else if (strncmp(commands, "OFF", strlen("OFF")) == 0)
+    exit(0);
+  else if (strncmp(commands, "SCALE=", strlen("SCALE=")) == 0)
   {
-    // Get time for Report
-    char sTime[16];
-    getTime(sTime, 16);
-    printf("%s %.1f\n", sTime, temp);
-    if (logFlag)
-    {
-      fprintf(logFile, "%s %.1f\n", sTime, temp);
-    }
-  }
-
-  void getTime(char *mTime, int size)
-  {
-    time_t rawtime;
-    struct tm *localTime;
-    time(&rawtime);
-    localTime = localtime(&rawtime);
-    strftime(mTime, size, "%H:%M:%S", localTime);
-  }
-
-  void parseCommands(const char *commands)
-  {
-    if (logFlag)
-    {
-      fprintf(logFile, "%s\n", commands);
-    }
-    if (strncmp(commands, "STOP", strlen("STOP")) == 0)
-      isReporting = false;
-    else if (strncmp(commands, "START", strlen("START")) == 0)
-      isReporting = true;
-    else if (strncmp(commands, "PERIOD=", strlen("PERIOD=")) == 0)
-      period = strtol(commands + 7, NULL, 10);
-    else if (strncmp(commands, "OFF", strlen("OFF")) == 0)
-      exit(0);
-    else if (strncmp(commands, "SCALE=", strlen("SCALE=")) == 0)
-    {
-      if (commands[6] == 'F')
-        scale = 'F';
-      else if (commands[6] == 'C')
-        scale = 'C';
-      else
-        fprintf(stderr, "Unrecognized scale character");
-    }
-    else if (strncmp(commands, "LOG ", strlen("LOG ")) == 0)
-    { // do nothing
-    }
+    if (commands[6] == 'F')
+      scale = 'F';
+    else if (commands[6] == 'C')
+      scale = 'C';
     else
-    {
-      fprintf(stderr, "Unrecognized arguments.\n");
-      exit(1);
-    }
+      fprintf(stderr, "Unrecognized scale character");
   }
-
-  void shutdown()
+  else if (strncmp(commands, "LOG ", strlen("LOG ")) == 0)
+  { // do nothing
+  }
+  else
   {
-    char sTime[15];
-    getTime(sTime, 15);
-    printf("%s SHUTDOWN\n", sTime);
-    if (logFile)
-    {
-      fprintf(logFile, "%s SHUTDOWN\n", sTime);
-      fclose(logFile);
-    }
-    mraa_aio_close(tempSensor);
-    mraa_gpio_close(button);
+    fprintf(stderr, "Unrecognized arguments.\n");
+    exit(1);
   }
+}
+
+void shutdown()
+{
+  char sTime[15];
+  getTime(sTime, 15);
+  printf("%s SHUTDOWN\n", sTime);
+  if (logFile)
+  {
+    fprintf(logFile, "%s SHUTDOWN\n", sTime);
+    fclose(logFile);
+  }
+  mraa_aio_close(tempSensor);
+  mraa_gpio_close(button);
+}
