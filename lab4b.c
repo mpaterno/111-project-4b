@@ -82,9 +82,9 @@ int main(int argc, char **argv)
 void getOptions(int argc, char **argv)
 {
   struct option long_options[] = {
-      {"period", required_argument, &periodFlag, 'p'},
-      {"scale", required_argument, &scaleFlag, 's'},
-      {"log", required_argument, &logFlag, 'l'},
+      {"period", required_argument, NULL, 'p'},
+      {"scale", required_argument, NULL, 's'},
+      {"log", required_argument, NULL, 'l'},
       {0, 0, 0, 0},
   };
   int c;
@@ -99,6 +99,7 @@ void getOptions(int argc, char **argv)
     {
     case 'p':
       period = atoi(optarg);
+      periodFlag = true;
       break;
     case 's':
       if (strlen(optarg) != 1 || optarg[0] != 'C' || optarg[0] != 'F')
@@ -108,9 +109,11 @@ void getOptions(int argc, char **argv)
       }
       else
         scale = optarg[0];
+      scaleFlag = true;
       break;
     case 'l':
       logFile = fopen(optarg, "w");
+      logFlag = true;
       printf("Line 114");
       break;
     default:
