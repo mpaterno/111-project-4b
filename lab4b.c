@@ -55,8 +55,8 @@ int main(int argc, char **argv)
   {
     time(&pEnd);
     // Exit on button click.
-    if (mraa_gpio_read(button))
-      exit(0);
+    // if (mraa_gpio_read(button))
+    //   exit(0);
 
     poll(pollfds, 1, 0); // 1 or 2
     if (pollfds[0].revents & POLLIN)
@@ -134,7 +134,7 @@ double getTemp(double rTemp)
 void initializeHardware()
 {
   tempSensor = mraa_aio_init(1);
-  button = mraa_gpio_init(73);
+  button = mraa_gpio_init(60);
   mraa_gpio_dir(button, MRAA_GPIO_IN);
 }
 
