@@ -40,8 +40,8 @@ void shutdown();
 
 int main(int argc, char **argv)
 {
-  atexit(shutdown);
   getOptions(argc, argv);
+  atexit(shutdown);
   initializeHardware();
 
   struct pollfd pollfds[1];
@@ -91,8 +91,8 @@ void getOptions(int argc, char **argv)
   while (1)
   {
     c = getopt_long(argc, argv, "p:s:l:", long_options, NULL);
-    if (optarg == NULL)
-      perror("NULL argument supplied.");
+    // if (optarg == NULL)
+    //   perror("NULL argument supplied.");
     if (c == -1)
       break;
     switch (c)
