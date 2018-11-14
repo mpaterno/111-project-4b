@@ -26,9 +26,9 @@ int period = 0;
 char scale = 0;
 FILE *logFile = 0;
 
-// // Hardware Implementations
-// mraa_aio_context tempSensor;
-// mraa_gpio_context button;
+// Hardware Implementations
+mraa_aio_context tempSensor;
+mraa_gpio_context button;
 
 void getOptions(int argc, char **argv);
 void initializeHardware();
@@ -54,11 +54,12 @@ int main(int argc, char **argv)
   while (1)
   {
     time(&pEnd);
-    // // Exit on button click.
-    // TODO: if (mraa_gpio_read(button))
-    //   exit(0)
+  // Exit on button click.
+  TODO:
+    if (mraa_gpio_read(button))
+      exit(0)
 
-    poll(pollfds, 1, 0); // 1 or 2
+          poll(pollfds, 1, 0); // 1 or 2
     if (pollfds[0].revents & POLLIN)
     {
       char commands[64];
@@ -68,9 +69,9 @@ int main(int argc, char **argv)
 
     if (isReporting && difftime(pStart, pEnd) >= period)
     {
-      // double rTemp = mraa_aio_read(tempSensor);
-      // double temp = getTemp(rTemp);
-      //writeReport(temp);
+      double rTemp = mraa_aio_read(tempSensor);
+      double temp = getTemp(rTemp);
+      writeReport(temp);
       pStart = pEnd;
     }
   }
@@ -125,9 +126,9 @@ double getTemp(double rTemp)
 
 void initializeHardware()
 {
-  // tempSensor = mraa_aio_init(1);
-  // button = mraa_gpio_init(60);
-  // mraa_gpio_dir(button, MRAA_GPIO_IN);
+  tempSensor = mraa_aio_init(1);
+  button = mraa_gpio_init(60);
+  mraa_gpio_dir(button, MRAA_GPIO_IN);
 }
 
 void writeReport(double temp)
@@ -194,6 +195,6 @@ void shutdown()
     fprintf(logFile, "%s SHUTDOWN\n", time);
     fclose(logFile);
   }
-  // TODO: mraa_aio_close(tempSensor);
-  // mraa_gpio_close(button);
+  mraa_aio_close(tempSensor);
+  mraa_gpio_close(button);
 }
