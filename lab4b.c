@@ -110,7 +110,7 @@ void getOptions(int argc, char **argv)
         scale = optarg[0];
       break;
     case 'l':
-      logFile = fopen(optarg, "w");
+      logFile = fopen(optarg, "a");
       break;
 
     default:
