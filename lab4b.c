@@ -90,7 +90,7 @@ void getOptions(int argc, char **argv)
   int c;
   while (1)
   {
-    c = getopt_long(argc, argv, "", long_options, NULL);
+    c = getopt_long(argc, argv, "p:s:l", long_options, NULL);
     if (optarg == NULL)
       perror("NULL argument supplied.");
     if (c == -1)
@@ -110,7 +110,8 @@ void getOptions(int argc, char **argv)
         scale = optarg[0];
       break;
     case 'l':
-      logFile = fopen(optarg, "a");
+      logFile = fopen(optarg, "w");
+      printf("Line 114");
       break;
 
     default:
