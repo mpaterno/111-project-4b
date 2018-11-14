@@ -1,5 +1,5 @@
-// #include <mraa.h>
-// #include <mraa/aio.h>
+#include <mraa.h>
+#include <mraa/aio.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -57,9 +57,9 @@ int main(int argc, char **argv)
   // Exit on button click.
   TODO:
     if (mraa_gpio_read(button))
-      exit(0)
+      exit(0);
 
-          poll(pollfds, 1, 0); // 1 or 2
+    poll(pollfds, 1, 0); // 1 or 2
     if (pollfds[0].revents & POLLIN)
     {
       char commands[64];

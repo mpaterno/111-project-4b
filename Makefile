@@ -2,7 +2,7 @@
 # default:
 # 	gcc -Wall -Wextra -DDUMMY -g -o lab4b lab4b.c
 
-	.SILENT:
+.SILENT:
 
 default:
 	gcc -lmraa -lm  -Wall -Wextra -g -o lab4b lab4b.c
