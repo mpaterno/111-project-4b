@@ -102,7 +102,7 @@ void getOptions(int argc, char **argv)
       periodFlag = true;
       break;
     case 's':
-      if ((strlen(optarg) != 1) || !(optarg[0] == 'C' || optarg[0] == 'F'))
+      if ((strlen(optarg) != 1))
       {
         fprintf(stderr, "Scale not recognized.");
         exit(1);
