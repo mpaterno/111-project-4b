@@ -32,7 +32,7 @@ mraa_gpio_context button;
 
 void getOptions(int argc, char **argv);
 void initializeHardware();
-double get_temp(double rTemp);
+double getTemp(double rTemp);
 void writeReport(double temp);
 void getTime(char *mTime, int size);
 void parseCommands(const char *commands);
@@ -54,8 +54,7 @@ int main(int argc, char **argv)
   while (1)
   {
     time(&pEnd);
-  // Exit on button click.
-  TODO:
+    // Exit on button click.
     if (mraa_gpio_read(button))
       exit(0);
 
@@ -188,11 +187,11 @@ void parseCommands(const char *commands)
 void shutdown()
 {
   char sTime[15];
-  getTime(time, 15);
-  printf("%s SHUTDOWN\n", time);
+  getTime(sTime, 15);
+  printf("%s SHUTDOWN\n", sTime);
   if (logFile)
   {
-    fprintf(logFile, "%s SHUTDOWN\n", time);
+    fprintf(logFile, "%s SHUTDOWN\n", sTime);
     fclose(logFile);
   }
   mraa_aio_close(tempSensor);
