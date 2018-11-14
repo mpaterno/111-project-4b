@@ -134,7 +134,7 @@ double getTemp(double rTemp)
 void initializeHardware()
 {
   tempSensor = mraa_aio_init(1);
-  button = mraa_gpio_init(60);
+  button = mraa_gpio_init(73);
   mraa_gpio_dir(button, MRAA_GPIO_IN);
 }
 
