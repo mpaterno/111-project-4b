@@ -18,7 +18,7 @@
 int periodFlag = 0;
 int scaleFlag = 0;
 int logFlag = 0;
-bool isReporting = false;
+bool isReporting = true;
 
 // Global Variables
 int period = 0;
@@ -66,7 +66,7 @@ int main(int argc, char **argv)
       parseCommands(commands);
     }
 
-    if (isReporting && difftime(pStart, pEnd) >= period)
+    if (isReporting && difftime(pEnd, pStart) >= period)
     {
       double rTemp = mraa_aio_read(tempSensor);
       double temp = getTemp(rTemp);
