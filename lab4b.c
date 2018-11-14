@@ -81,7 +81,7 @@ int main(int argc, char **argv)
 // Parse Options
 void getOptions(int argc, char **argv)
 {
-  static struct option long_options[] = {
+  struct option long_options[] = {
       {"period", required_argument, &periodFlag, 'p'},
       {"scale", required_argument, &scaleFlag, 's'},
       {"log", required_argument, &logFlag, 'l'},
@@ -90,7 +90,7 @@ void getOptions(int argc, char **argv)
   int c;
   while (1)
   {
-    c = getopt_long(argc, argv, "p:s:l", long_options, NULL);
+    c = getopt_long(argc, argv, "p:s:l:", long_options, NULL);
     if (optarg == NULL)
       perror("NULL argument supplied.");
     if (c == -1)
@@ -113,7 +113,6 @@ void getOptions(int argc, char **argv)
       logFile = fopen(optarg, "w");
       printf("Line 114");
       break;
-
     default:
       fprintf(stderr, "Unrecognized Arguments.");
       exit(1);
