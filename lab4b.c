@@ -196,7 +196,7 @@ void shutdown()
   char sTime[15];
   getTime(sTime, 15);
   printf("%s SHUTDOWN\n", sTime);
-  if (logFile)
+  if (logFlag)
   {
     fprintf(logFile, "%s SHUTDOWN\n", sTime);
     fclose(logFile);
