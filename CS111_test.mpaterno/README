@@ -1,0 +1,10 @@
+NAME: Matthew Paterno
+EMAIL: mpaterno@g.ucla.edu
+ID: 904756085
+
+In this project, we implemented Grove sensors and buttons on a beaglebone system
+via a C program called lab4b.c
+lab4b is an executable that takes keyboard commands to interact with the beaglebone.
+check.sh is a test script to test the functionality of the beaglebone.
+The Makefile includes a check that calls the check.sh along with the typical
+make commands.
