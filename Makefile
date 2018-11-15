@@ -9,7 +9,6 @@ check: default
 	grep -Eo '[6-9][0-9]' test.txt
 	rm -rf test.txt
 
-
 clean:
 	rm -f lab4b *.txt *.o *.tar.gz
 
