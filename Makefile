@@ -6,12 +6,6 @@ default:
 
 check: default
 	./check.sh
-	# if [ -s error_output.txt ]; \
-	then \
-		cat error_output.txt; rm -f error_output.txt;\
-	else \
-	   echo "Passed Smoke Check"; \
-	fi 
 
 clean:
 	rm -f lab4b *.txt *.o *.tar.gz
