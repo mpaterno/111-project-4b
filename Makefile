@@ -5,7 +5,10 @@ default:
 	gcc -lmraa -lm  -Wall -Wextra -g -o lab4b lab4b.c
 
 check: default
-	./check.sh
+	echo "OFF" | ./lab4b --log=test.txt
+	grep -Eo '[6-9][0-9]' test.txt
+	rm -rf test.txt
+
 
 clean:
 	rm -f lab4b *.txt *.o *.tar.gz
