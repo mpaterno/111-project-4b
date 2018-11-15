@@ -55,7 +55,7 @@ int main(int argc, char **argv)
   {
     time(&pEnd);
     // Exit on button click.
-    if (!mraa_gpio_read(button))
+    if (mraa_gpio_read(button))
       exit(0);
 
     poll(pollfds, 1, 0); // 1 or 2
