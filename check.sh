@@ -1,3 +1,5 @@
+#!/bin/bash
+
 LAB="lab4b"
 README="README"
 MAKEFILE="Makefile"
