@@ -12,7 +12,6 @@
 #include <math.h>
 #include <sys/errno.h>
 #include <stdbool.h>
-// TODO: Add all necessary libraries.
 
 // Global Flags
 int periodFlag = 0;
@@ -22,7 +21,6 @@ bool isReporting = true;
 
 // Global Variables
 int period = 0;
-// TODO: May want to change initialization.
 char scale = 0;
 FILE *logFile = 0;
 
@@ -91,8 +89,7 @@ void getOptions(int argc, char **argv)
   while (1)
   {
     c = getopt_long(argc, argv, "p:s:l:", long_options, NULL);
-    // if (optarg == NULL)
-    //   perror("NULL argument supplied.");
+
     if (c == -1)
       break;
     switch (c)
