@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # test the standard arguments
 echo
 p=2
